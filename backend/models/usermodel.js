@@ -7,9 +7,9 @@ const userSchema = new mongoose.Schema({
      isVerified:{type:Boolean , default:false},
      isLogin:{type:Boolean , default:false},
      token:{type:String , default:null},
-     OTPVerification:{type:Stirng , default:null},
+     OTPVerification:{type:String , default:null},
      OTPExpiry:{type:Date , default:null},
 
-},{tiemStamps:true})
+},{timestamps:true})
 
 export const user = mongoose.model("User" , userSchema)

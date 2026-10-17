@@ -1,3 +1,5 @@
+
+import bcrypt from 'bcryptjs'
 import { user } from '../models/usermodel.js';
 export const registerUser = async (req, resp) => {
     try {
@@ -10,7 +12,7 @@ export const registerUser = async (req, resp) => {
             })
         }
 
-        const existingUser = await user.findOne((email))
+        const existingUser = await user.findOne({email})
 
         if (existingUser) {
             return resp.status(400).json({
@@ -18,11 +20,12 @@ export const registerUser = async (req, resp) => {
                 message: "User already exist here"
             })
         }
+        const hashedPassword = await bcrypt.hash(password , 10)
 
-        const newuser = await user.craete({
+        const newuser = await user.create({
             username,
             email,
-            password,
+            password:hashedPassword
         })
 
         return resp.status(201).json({
@@ -35,7 +38,7 @@ export const registerUser = async (req, resp) => {
     } catch (error) {
         return resp.status(500).json({
             success: false,
-            Message: error.Message
+            message: error.message
         })
 
     }
