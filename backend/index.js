@@ -1,11 +1,11 @@
+import morgan from 'morgan'
 import express from 'express'
 import { connectDb } from './database/db.js'; 
 import userRoute from './routes/userroute.js'
 import 'dotenv/config' 
-
-
 const app = express()
 
+app.use(morgan('dev'))
 app.use(express.json())
 app.use('/user' , userRoute)
 

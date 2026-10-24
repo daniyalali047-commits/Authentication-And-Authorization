@@ -1,4 +1,5 @@
-
+import {verifyMail} from '../email-verify/verify-email.js'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { user } from '../models/usermodel.js';
 export const registerUser = async (req, resp) => {
@@ -12,7 +13,7 @@ export const registerUser = async (req, resp) => {
             })
         }
 
-        const existingUser = await user.findOne({email})
+        const existingUser = await user.findOne({ email })
 
         if (existingUser) {
             return resp.status(400).json({
@@ -20,14 +21,18 @@ export const registerUser = async (req, resp) => {
                 message: "User already exist here"
             })
         }
-        const hashedPassword = await bcrypt.hash(password , 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         const newuser = await user.create({
             username,
             email,
-            password:hashedPassword
+            password: hashedPassword
         })
 
+        const token = await jwt.sign({ id: newuser._id }, process.env.SECRET_KEY, { expiresIn: "10m" })
+        verifyMail(token, email)
+        newuser.token = token
+        await newuser.save()
         return resp.status(201).json({
             success: true,
             messgae: "User created succesfully",
