@@ -1,4 +1,4 @@
 {
-  "image": "mcr.microsoft.com/devcontaine/universal:2rs",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {}
 }
