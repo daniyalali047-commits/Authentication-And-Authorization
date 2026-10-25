@@ -52,10 +52,10 @@ export const registerUser = async (req, resp) => {
 export const verification = async (req, resp) => {
     try {
         const authheaders = req.headers.authorization
-        if (!authheaders || !authheaders.startsWith("Bearer")) {
+        if (!authheaders || !authheaders.startsWith('Bearer ')) {
             return resp.status(401).json({
                 succes: false,
-                message: "Authorization token is missing"
+                message: "Authorization token is missing or invalid"
             })
         }
 
