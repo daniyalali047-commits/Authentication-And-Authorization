@@ -5,6 +5,7 @@ import userRoute from './routes/userroute.js'
 import 'dotenv/config' 
 const app = express()
 
+//middleware
 app.use(morgan('dev'))
 app.use(express.json())
 app.use('/user' , userRoute)
