@@ -170,8 +170,8 @@ return resp.status(500).json({
 export const logout = async(req,  resp)=>{
     try {
         const userid = req.userId
-        await session.deleteMany({userid})
-        await user.findbyIdAndUpdate(userid , {isLogin:false})
+        await session.deleteMany({ userId: userid })
+        await user.findByIdAndUpdate(userid , {isLogin:false})
         return resp.status(200).json({
             success:true,
             message:"Logout successfully"
